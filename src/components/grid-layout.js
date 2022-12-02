@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import AddRemoveLayout from "./ShowcaseLayout";
 // import AddRemoveLayout from "./ShowcaseLayout";
-
+import { SuspenseFallbackLoader } from "./Loader";
 export default class ExampleLayout extends React.Component {
   constructor(props) {
     super(props);
@@ -17,7 +17,7 @@ export default class ExampleLayout extends React.Component {
 
   saveToLS(key, value) {
     const findIndex = value.findIndex((val) => val.i === "+");
-    const checkValue = value.find((val) => val.i === "+");
+    const checkValue = value.find((val) => val.i === "+"); 
     // const addValToLastIndex = value[value.length - 1];
     const changeValue = { ...checkValue, add: true };
     value[findIndex] = changeValue;
@@ -50,6 +50,7 @@ export default class ExampleLayout extends React.Component {
           <div className="columns">{this.stringifyLayout()}</div>
         </div> */}
         <AddRemoveLayout onLayoutChange={this.onLayoutChange} />
+        {/* <SuspenseFallbackLoader /> */}
       </div>
     );
   }

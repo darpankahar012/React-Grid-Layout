@@ -21,92 +21,101 @@ export class AuthenticationService {
     return (dispatch) => {
       dispatch(login());
       axios
-        .post(`${process.env.REACT_APP_API_URL}/api/login`,
-          data)
+        .post(`${process.env.REACT_APP_API_URL}/login`, data, {
+          headers: {
+            "content-Type": "application/json",
+            Authkey: `${process.env.REACT_APP_API_AUTH_KEY}`,
+          },
+        })
         .then((response) => {
+          console.log("response.data", response.data);
           localStorage.removeItem("access_token");
           if (response.data.status === 1) {
-            localStorage.setItem("access_token", response.data.responsedata.token);
-            dispatch(loginSuccess(response.data.responsedata));
+            localStorage.setItem(
+              "access_token",
+              response.data.responseData.token
+            );
+            dispatch(loginSuccess(response.data.responseData));
           } else {
             dispatch(loginInvalid(response.data.message));
           }
         })
         .catch((error) => {
+          console.log("Login error")
           localStorage.clear();
           dispatch(loginError("Login error"));
         });
     };
   };
-  static registerUser = (data) => {
-    return (dispatch) => {
-      dispatch(register());
-      axios
-        .post(`${process.env.REACT_APP_API_URL}/api/register`,
-          data)
-        .then((response) => {
-          console.log("🚀 ~ file: authentication.js ~ line 45 ~ AuthenticationService ~ .then ~ response", response)
-          if (response.data.status === 1) {
-            dispatch(registerSuccess(true));
-          } else {
-            dispatch(registerError(true));
-          }
-        })
-        .catch((error) => {
-          dispatch(registerError("Registration error"));
-        });
-    };
-  };
+  // static registerUser = (data) => {
+  //   return (dispatch) => {
+  //     dispatch(register());
+  //     axios
+  //       .post(`${process.env.REACT_APP_API_URL}/api/register`, data)
+  //       .then((response) => {
+  //         console.log(
+  //           "🚀 ~ file: authentication.js ~ line 45 ~ AuthenticationService ~ .then ~ response",
+  //           response
+  //         );
+  //         if (response.data.status === 1) {
+  //           dispatch(registerSuccess(true));
+  //         } else {
+  //           dispatch(registerError(true));
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         dispatch(registerError("Registration error"));
+  //       });
+  //   };
+  // };
 
+  // static notesListing = (data) => {
+  //   return (dispatch) => {
+  //     dispatch(notesList());
+  //     axios
+  //       .post(`${process.env.REACT_APP_API_URL}/api/list-notes`, data, {
+  //         headers: {
+  //           "content-Type": "application/json",
+  //           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+  //         },
+  //       })
+  //       .then((response) => {
+  //         console.log(
+  //           "🚀 ~ file: authentication.js ~ line 45 ~ AuthenticationService ~ .then ~ response",
+  //           response
+  //         );
+  //         if (response.data.status === 1) {
+  //           dispatch(notesListSuccess(true));
+  //         } else {
+  //           dispatch(notesListError(true));
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         dispatch(notesListError("Notes Listing error"));
+  //       });
+  //   };
+  // };
 
-
-  static notesListing = (data) => {
-    return (dispatch) => {
-      dispatch(notesList());
-      axios
-        .post(`${process.env.REACT_APP_API_URL}/api/list-notes`,
-          data, {
-          headers: {
-            "content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-          },
-        })
-        .then((response) => {
-          console.log("🚀 ~ file: authentication.js ~ line 45 ~ AuthenticationService ~ .then ~ response", response)
-          if (response.data.status === 1) {
-            dispatch(notesListSuccess(true));
-          } else {
-            dispatch(notesListError(true));
-          }
-        })
-        .catch((error) => {
-          dispatch(notesListError("Notes Listing error"));
-        });
-    };
-  };
-
-
-
-  static GetUserDetails = () => {
-    return (dispatch) => {
-      dispatch(getUserDetails());
-      axios
-        .get(`${process.env.REACT_APP_API_URL}/api/v1/account/profile`, {
-          headers: {
-            "content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-          },
-        })
-        .then((response) => {
-          if (response.data.acknowledge === 1) {
-            dispatch(userDetails(response.data));
-          } else {
-            dispatch(userDetailsInvalid(response.data.message));
-          }
-        })
-        .catch((error) => {
-          dispatch(userDetailsError(error));
-        });
-    };
-  };
+  // static GetUserDetails = () => {
+  //   return (dispatch) => {
+  //     dispatch(getUserDetails());
+  //     axios
+  //       .get(`${process.env.REACT_APP_API_URL}/api/v1/account/profile`, {
+  //         headers: {
+  //           "content-Type": "application/json",
+  //           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+  //         },
+  //       })
+  //       .then((response) => {
+  //         if (response.data.acknowledge === 1) {
+  //           dispatch(userDetails(response.data));
+  //         } else {
+  //           dispatch(userDetailsInvalid(response.data.message));
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         dispatch(userDetailsError(error));
+  //       });
+  //   };
+  // };
 }

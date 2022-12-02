@@ -1,0 +1,54 @@
+.mainDiv {
+  background: #287eef;
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  justify-content: center;
+}
+
+.formdiv {
+  max-width: 400px;
+  width: 90%;
+  margin: auto;
+}
+
+form {
+  background: #fff;
+  padding: 50px 30px;
+  border-radius: 5px;
+  margin: 20px 0;
+}
+
+.formGroup {
+  margin-bottom: 30px;
+}
+
+.logo {
+  display: block;
+  margin: auto;
+}
+
+.lo_ft span {
+  font-size: 15px;
+  color: #fff;
+  text-align: center;
+  display: block;
+  margin: 7px 0;
+  font-weight: 500;
+}
+
+.formdiv label {
+  color: #f00;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.formdiv input {
+  border: none;
+  border-bottom: 1px solid #ddd;
+  border-radius: 0;
+}
+
+.formdiv input:focus {
+  box-shadow: none;
+}

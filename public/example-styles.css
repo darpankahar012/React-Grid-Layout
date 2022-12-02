@@ -6,9 +6,9 @@ body {
   #content {
     width: 100%;
   }
-  .react-grid-layout {
+  /* .react-grid-layout {
     background: #eee;
-  }
+  } */
   .layoutJSON {
     background: #ddd;
     border: 1px solid black;

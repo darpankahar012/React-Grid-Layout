@@ -1,0 +1,858 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap');
+@font-face {
+    font-family: 'Font Awesome 5 Brands';
+    font-style: normal;
+    font-weight: 400;
+    font-display: block;
+    src: url("../webfonts/fa-brands-400.eot");
+    src: url("../webfonts/fa-brands-400.eot?#iefix") format("embedded-opentype"), url("../webfonts/fa-brands-400.woff2") format("woff2"), url("../webfonts/fa-brands-400.woff") format("woff"), url("../webfonts/fa-brands-400.ttf") format("truetype"), url("../webfonts/fa-brands-400.svg#fontawesome") format("svg");
+}
+
+.fal,
+.far {
+    font-family: "Font Awesome 5 Pro";
+}
+
+.fab {
+    font-family: 'Font Awesome 5 Brands';
+    font-weight: 400;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    overflow-x: hidden;
+}
+
+a,
+a:link,
+a:visited,
+a:active,
+a:hover,
+button,
+button:focus,
+input,
+select,
+textarea,
+i {
+    text-decoration: none;
+    outline: none;
+    box-shadow: none !important;
+    -moz-transition: all 300ms ease-in-out;
+    -webkit-transition: all 300ms ease-in-out;
+    transition: all 300ms ease-in-out;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    outline: none;
+    -moz-transition: all 300ms ease-in-out;
+    -webkit-transition: all 300ms ease-in-out;
+    transition: all 300ms ease-in-out;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+    width: auto;
+    height: auto;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+img {
+    max-width: 100%;
+    -moz-transition: all 300ms ease-in-out;
+    -webkit-transition: all 300ms ease-in-out;
+    transition: all 300ms ease-in-out;
+}
+
+p {
+    font-size: 16px;
+    line-height: 26px;
+}
+
+.comnpadding {
+    padding: 50px 0;
+}
+
+.comntitle {
+    text-align: center;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    font-weight: 500;
+    position: relative;
+}
+
+.comntitle::after {
+    content: "";
+    width: 70px;
+    height: 4px;
+    background: #000;
+    display: block;
+    margin: 10px auto;
+}
+
+.navbar {
+    padding: 0;
+    background: #0077fd;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: #fff;
+    font-size: 15px;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-weight: 600;
+    margin-left: 10px;
+}
+
+.navbar-light .navbar-nav .nav-link:focus,
+.navbar-light .navbar-nav .nav-link:hover,
+.navbar-light .navbar-nav .nav-link.active,
+.navbar-light .navbar-nav .show>.nav-link,
+.des_filter ul li a:hover {
+    color: #0077fd;
+    background: #ffffff;
+}
+
+main {
+    height: calc(100vh - 115px);
+    overflow: auto;
+}
+
+.des_filter .submenu li a:hover {
+    background: #0f9398;
+    color: #fff;
+}
+
+.des_filter ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-evenly;
+    background: #173bb2;
+}
+
+.des_filter ul li {
+    position: relative;
+}
+
+.des_filter ul li a {
+    font-size: 16px;
+    padding: 15px;
+    font-weight: 600;
+    color: #fff;
+    display: block;
+}
+
+.des_filter .submenu {
+    position: absolute;
+    left: 0;
+    top: 100%;
+    z-index: 2;
+    min-width: 150px;
+    display: none;
+    box-shadow: 0 0 5px #ddd;
+}
+
+.des_filter .submenu li a {
+    padding: 10px 15px;
+    border-bottom: 1px solid rgb(255 255 255 / 20%);
+    font-weight: normal;
+    font-weight: 600;
+}
+
+.des_filter .submenu li:last-child a {
+    border-bottom: none;
+}
+
+
+/* .dropdown:hover .submenu {
+    display: block;
+} */
+
+@-webkit-keyframes ticker {
+    0% {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+        visibility: visible;
+    }
+    100% {
+        -webkit-transform: translate3d(-100%, 0, 0);
+        transform: translate3d(-100%, 0, 0);
+    }
+}
+
+
+/*===========================================  
+    Second Filter CSS START HERE 
+===========================================*/
+
+.failter_two {
+    padding: 20px 0;
+}
+
+.second_filter {
+    background: #eef4f6;
+    padding: 30px;
+    border-radius: 10px;
+    /* box-shadow: 0 0 10px #ddd; */
+}
+
+
+/* .second_filter .comntitle {
+    color: #fff;
+} */
+
+.second_filter .comntitle::after {
+    background: #0077fd;
+}
+
+.second_filter ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.second_filter li {
+    width: 19%;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 5px;
+}
+
+.second_filter li span,
+.second_filter li select {
+    font-size: 16px;
+    padding: 10px 15px;
+    background: #fff;
+    color: #3c4b64;
+    display: block;
+    border-radius: 25px;
+    text-align: center;
+    border: 2px solid #0077fd;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.second_filter li select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: url("../images/down-arrow.png") no-repeat #fff;
+    background-position: 96% center;
+    padding-right: 30px;
+}
+
+
+/*===========================================  
+    TICKER 1 CSS START HERE 
+===========================================*/
+
+@keyframes ticker {
+    0% {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+        visibility: visible;
+    }
+    100% {
+        -webkit-transform: translate3d(-100%, 0, 0);
+        transform: translate3d(-100%, 0, 0);
+    }
+}
+
+.ticker-wrap {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    overflow: hidden;
+    height: 4rem;
+    background-color: rgba(0, 0, 0, 0.9);
+    padding-left: 0;
+    box-sizing: border-box;
+}
+
+.ticker-wrap .ticker {
+    display: inline-block;
+    height: 4rem;
+    line-height: 4rem;
+    white-space: nowrap;
+    padding-right: 100%;
+    box-sizing: content-box;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+    -webkit-animation-name: ticker;
+    animation-name: ticker;
+    -webkit-animation-duration: 30s;
+    animation-duration: 30s;
+}
+
+.ticker-wrap .ticker__item {
+    display: inline-block;
+    padding: 0 2rem;
+    font-size: 18px;
+    color: white;
+    position: relative;
+    border-right: 1px solid #ddd;
+}
+
+
+/*===========================================  
+    TICKER 1 CSS END HERE 
+===========================================*/
+
+
+/*===========================================  
+    TICKER 2 CSS START HERE 
+===========================================*/
+
+@keyframes ticker {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-1224px);
+    }
+}
+
+#flyoutContainer {
+    position: fixed;
+    top: auto;
+    bottom: 0px;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    background: #000;
+    overflow: hidden;
+}
+
+#flyoutContainer div#tickerContainer {
+    background-color: #eef4f6;
+    border-bottom: solid #3d3c64 1px;
+    border-top: solid #3d3c64 1px;
+    width: 100%;
+}
+
+#flyoutContainer div#tickerContainer div#ticker {
+    position: relative;
+    height: 54px;
+}
+
+#flyoutContainer div#tickerContainer div#ticker h1 {
+    position: absolute;
+    background-color: #3d3c64;
+    color: #fff;
+    z-index: 2;
+    padding: 0 15px;
+    border-right: dotted #aaa 1px;
+    margin: 0;
+    font-size: 18px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#flyoutContainer div#tickerContainer div#ticker div.ticker-content {
+    z-index: 1;
+    position: absolute;
+    left: 270px;
+    line-height: 54px;
+}
+
+#flyoutContainer div#tickerContainer div#ticker div.ticker-content ul {
+    font-size: 16px;
+    display: inline-block;
+    white-space: nowrap;
+    width: 10000px;
+    /*
+      animation-iteration-count: infinite;
+       animation-timing-function: linear;
+    animation-name: ticker;
+    animation-duration:25s; */
+    padding: 0;
+    margin: 0;
+    color: #3d3c64;
+}
+
+#flyoutContainer div#tickerContainer div#ticker div.ticker-content ul:hover {
+    animation-play-state: paused;
+}
+
+#flyoutContainer div#tickerContainer div#ticker div.ticker-content ul li {
+    padding-left: 20px;
+    list-style-position: inside;
+    float: left;
+}
+
+#flyoutContainer div#tickerContainer div#ticker div.ticker-content ul li span {
+    padding-right: 5px;
+}
+
+#flyoutContainer div#tickerContainer div#ticker div.ticker-content ul li span:last-child {
+    padding-right: 0;
+}
+
+#flyoutContainer div#tickerContainer div#ticker div.ticker-content ul li .eventDate,
+#flyoutContainer div#tickerContainer div#ticker div.ticker-content ul li .eventLocation {
+    color: #777;
+}
+
+#flyoutContainer div#tickerContainer div#ticker div.ticker-content ul li .eventName {
+    color: #3d3c64;
+    font-weight: bold;
+    margin: 0 5px;
+    text-transform: capitalize;
+}
+
+#flyoutContainer div#Event-Flyout {
+    z-index: 200;
+    width: 540px;
+    display: none;
+}
+
+#flyoutContainer div#Event-Flyout>div {
+    padding: 0 10px;
+    background-color: #b0d121;
+}
+
+#flyoutContainer div#Event-Flyout>div h2 {
+    font-family: georgia;
+    font-size: 24pt;
+    margin: 0 0 10px 0;
+}
+
+#flyoutContainer div#Event-Flyout>div>ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#flyoutContainer div#Event-Flyout>div>ul li {
+    padding: 5px 0;
+    border-bottom: dotted 1px #122632;
+}
+
+#flyoutContainer div#Event-Flyout>div>ul li:last-child {
+    border: none;
+}
+
+#flyoutContainer div#Event-Flyout>div>ul li img {
+    padding-right: 5px;
+    margin-right: 5px;
+    border-right: dotted 1px #122632;
+}
+
+#flyoutContainer div#Event-Flyout>div>ul li>div {
+    padding: auto 0;
+}
+
+#flyoutContainer:hover div#Event-Flyout {
+    display: block;
+    z-index: 200;
+    max-height: 500px;
+}
+
+
+/*===========================================  
+    TICKER 2 CSS END HERE 
+===========================================*/
+
+.wigetbox {
+    margin-bottom: 50px;
+}
+
+.boxdiv {
+    position: relative;
+    box-shadow: 0 0 15px #ddd;
+    background: #fff;
+    height: 270px;
+    overflow: auto;
+    margin: 30px 0 0 0;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.wigetoverlay {
+    position: absolute;
+    top: -60px;
+    right: 0;
+    padding: 10px;
+    background: #3faeb5;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 0 0 0 5px;
+    -moz-transition: all 300ms ease-in-out;
+    -webkit-transition: all 300ms ease-in-out;
+    transition: all 300ms ease-in-out;
+}
+
+.wigetoverlay span {
+    font-weight: 600;
+    text-transform: uppercase;
+    border: 1px solid;
+    padding: 2px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.wigetoverlay i {
+    font-size: 16px;
+    cursor: pointer;
+    margin: 0 5px;
+}
+
+.wigetoverlay button {
+    border: 1px solid #fff;
+    cursor: pointer;
+    background: none;
+    color: #fff;
+    border-radius: 5px;
+}
+
+.boxdiv:hover .wigetoverlay {
+    top: 0;
+}
+
+
+/*==========================================================
+                TABLES CSS START HERE 
+ ==========================================================*/
+
+table {
+    border-collapse: collapse;
+    border-bottom: 1px solid rgb(0, 0, 0, 0.2);
+    max-width: 2000px;
+    width: 100%;
+    margin: 0px auto;
+}
+
+
+/*----- table headings -----*/
+
+th {
+    background-color: #eef4f6;
+    /* border: 1px solid #3d3c64; */
+    padding: 8px 8px;
+    text-align: left;
+    font-size: 16px;
+}
+
+
+/*----- table data (a cell) -----*/
+
+td {
+    padding: 5px 8px;
+    border: none;
+    /* border-bottom: 1px solid #ddd; */
+    font-size: 14px;
+}
+
+
+/*----- table row hover animation -----*/
+
+tr {
+    transition: background-color 0.5s;
+    border-bottom: 1px solid #ddd;
+}
+
+tr:last-child {
+    border-bottom: none;
+}
+
+tr:hover {
+    background-color: #e8e8e8;
+}
+
+td {
+    transition: background-color 0.4s;
+}
+
+td:hover {
+    background-color: lightgrey;
+}
+
+.add_widget_form select {
+    height: 50px;
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+
+.add_widget_form .modal-header {
+    background: #0077fd;
+    color: #fff;
+    text-align: center;
+}
+
+.add_widget_form form button {
+    margin: 0 auto;
+    display: block;
+}
+
+.sidebar .closebtn {
+    background: #fff;
+    border-radius: 50%;
+    border: none;
+    text-align: center;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    font-size: 16px;
+    cursor: pointer;
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    z-index: 1;
+}
+
+.side_fixed_icon {
+    position: fixed;
+    right: 0;
+    top: 50%;
+    z-index: 2;
+    transform: translateY(-50%);
+    background: #393939;
+    /* border-radius: 10px 0 0 10px; */
+}
+
+.side_fixed_icon a {
+    font-size: 22px;
+    color: #fff;
+    padding: 18px 10px 18px 18px;
+    display: block;
+    border-bottom: 1px solid #ddd;
+}
+
+.side_fixed_icon a:hover {
+    background: #0077fd;
+}
+
+.side_fixed_icon a:last-child {
+    border-bottom: none;
+}
+
+.sidebar {
+    position: absolute;
+    top: 0;
+    right: -100%;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    height: calc(100vh - 56px);
+    background: #393939;
+    overflow: auto;
+    -moz-transition: all 800ms ease-in-out;
+    -webkit-transition: all 800ms ease-in-out;
+    transition: all 800ms ease-in-out;
+}
+
+.sidebar.show {
+    right: 0;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 35px 0 0 0;
+    margin: 0;
+    position: relative;
+    display: table;
+    width: 50%;
+    height: calc(100vh - 112px);
+    overflow: auto;
+}
+
+.sidebar li a {
+    font-size: 16px;
+    color: #fff;
+    border-bottom: 1px solid rgb(255 255 255 / 30%);
+    display: block;
+    padding: 15px 30px 15px 10px;
+    position: relative;
+}
+
+.sidebar li:last-child a {
+    border-bottom: 1px solid rgb(255 255 255 / 0%);
+}
+
+.sidebar li a:hover {
+    background: #1c1c1c;
+    padding-left: 15px;
+}
+
+.sidebar li.dropmenu.current>a,
+.sidebar .submenu li:last-child a {
+    border-bottom: 1px solid rgb(255 255 255 / 0);
+}
+
+.sidebar li.dropmenu.current a {
+    background: #4d4d4d;
+}
+
+
+/* .sidebar li.dropmenu a::before {
+    content: "\f078";
+    font-family: "Font Awesome 5 Pro";
+    position: absolute;
+    right: 10px;
+    top: 15px;
+    color: #fff;
+} */
+
+.sidebar .dropmenu.current .submenu {
+    display: block;
+    background: #4d4d4d;
+    /* border-radius: 10px; */
+    position: relative;
+    margin: 10px;
+}
+
+.sidebar .submenu::before {
+    content: "";
+    width: 0;
+    height: 0;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-bottom: 15px solid #4d4d4d;
+    position: absolute;
+    left: 10px;
+    top: -15px;
+}
+
+.sidebar .submenu {
+    display: none;
+}
+
+.dropmenu.current .submenu {
+    display: block;
+}
+
+.date {
+    color: #fff;
+    background: #4d4d4d;
+    padding: 10px;
+}
+
+.date input {
+    height: 34px;
+    border: none;
+    padding: 8px;
+}
+
+.innerdiv {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #4d4d4d;
+    color: #fff;
+    width: auto;
+    font-size: 16px;
+    padding: 10px;
+    display: none;
+    -moz-transition: all 300ms ease-in-out;
+    -webkit-transition: all 300ms ease-in-out;
+    transition: all 300ms ease-in-out;
+}
+
+.dropmenu.current .innerdiv {
+    display: block;
+    left: 100%;
+    -moz-transition: all 300ms ease-in-out;
+    -webkit-transition: all 300ms ease-in-out;
+    transition: all 300ms ease-in-out;
+    width: 100%;
+    height: calc(100vh - 54px);
+}
+
+
+/* This css is for normalizing styles. You can skip this. */
+
+.custom_checkbox {
+    margin: 5px 0;
+    display: table;
+}
+
+.custom_checkbox input[type="checkbox"] {
+    padding: 0;
+    height: initial;
+    width: initial;
+    margin-bottom: 0;
+    display: none;
+    cursor: pointer;
+}
+
+.custom_checkbox label {
+    position: relative;
+    cursor: pointer;
+    padding-left: 30px;
+}
+
+.custom_checkbox label:before {
+    content: '';
+    background-color: transparent;
+    border: 1px solid #fff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    left: 0;
+    top: 5px;
+    cursor: pointer;
+}
+
+.custom_checkbox input:checked+label:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 1px;
+    left: 7px;
+    width: 6px;
+    height: 14px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.sidebtndiv {
+    background: #393939;
+    position: relative;
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.sidebtndiv button {
+    width: 48%;
+}
+
+#exampleModal .closebtn {
+    background: #fff;
+    border-radius: 50%;
+    border: none;
+    text-align: center;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    font-size: 16px;
+    cursor: pointer;
+}

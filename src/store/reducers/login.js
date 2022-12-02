@@ -5,12 +5,6 @@ const initialState = {
     error: "",
     data: "",
     invalidCredential: "",
-    registerUserLoading: false,
-    registerUserData: "",
-    registerUserError: "",
-    notesLoading: false,
-    notesData: [],
-    notesError: "",
 }
 
 export const login = (state = initialState, action) => {
@@ -58,48 +52,6 @@ export const login = (state = initialState, action) => {
                 error: "",
                 data: "",
                 invalidCredential: ""
-            }
-        case authActions.REGISTER_USER:
-            return {
-                ...state,
-                registerUserLoading: true,
-                registerUserData: "",
-                registerUserError: ""
-            }
-        case authActions.REGISTER_USER_SUCCESS:
-            return {
-                ...state,
-                registerUserLoading: false,
-                registerUserData: action.payload,
-                registerUserError: ""
-            }
-        case authActions.REGISTER_USER_ERROR:
-            return {
-                ...state,
-                registerUserLoading: false,
-                registerUserData: "",
-                registerUserError: action.payload,
-            }
-        case authActions.NOTES_LISTING:
-            return {
-                ...state,
-                notesLoading: true,
-                notesData: "",
-                notesError: ""
-            }
-        case authActions.NOTES_LISTING_SUCCESS:
-            return {
-                ...state,
-                notesLoading: false,
-                notesData: action.payload,
-                notesError: ""
-            }
-        case authActions.NOTES_LISTING_ERROR:
-            return {
-                ...state,
-                notesLoading: false,
-                notesData: "",
-                notesError: action.payload,
             }
         default:
             return state
