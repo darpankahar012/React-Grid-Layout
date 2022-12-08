@@ -1,28 +1,28 @@
 import React from "react";
-import Header from "../components/Header/Header";
-// import Footer from "./Footer";
-// import { useLocation } from "react-router-dom";
-// import Sidebar from "./Sidebar";
+import Header from "../components/Headers/Header";
+import Ticker from "../components/Ticker/Ticker";
+import { useLocation } from "react-router-dom";
+import Sidebar from "../components/Sidebar/Sidebar";
 
 function Layout({ children }) {
-  // const location = useLocation();
-  // var PathsArrays = ["/login", "/forgotPassword"];
+  const location = useLocation();
+  var PathsArrays = ["/login", "/forgotPassword"];
   return (
     <>
-      {/* {!PathsArrays.includes(location?.pathname) ? (
-        <> */}
+      {!PathsArrays.includes(location.pathname) ? (
+        <>
           <Header />
           <div className="container-fluid page-body-wrapper">
-            {/* <Sidebar /> */}
+            <Sidebar />
             <div className="main-panel">
               {children}
-              {/* <Footer /> */}
+              <Ticker />
             </div>
           </div>
-        {/* </>
+        </>
       ) : (
         <>{children}</>
-      )} */}
+      )}
     </>
   );
 }

@@ -15,6 +15,7 @@ const Sidebar = () => {
   const {
     mainWidgetTypeArray,
     subWidgetTypeArray,
+    loginData,
     loading,
     widgetData,
     widgetLoading,
@@ -22,11 +23,20 @@ const Sidebar = () => {
   } = useSelector((state) => ({
     mainWidgetTypeArray: state.login?.data.mainWidgetTypeArray,
     subWidgetTypeArray: state.login?.data.subWidgetTypeArray,
+    loginData: state.login?.data,
     loading: state.login?.loading,
     widgetData: state.widget?.data,
     widgetLoading: state.widget?.loading,
     widgetError: state.widget?.error,
   }));
+
+  const [productArrayList, setProductArrayList] = React.useState([]);
+  const [leadTypeArrayList, setLeadTypeArrayList] = React.useState([]);
+  const [qualityTypeArrayList, setQualityTypeArrayList] = React.useState([]);
+  const [buyersArrayList, setBuyersArrayList] = React.useState([]);
+  const [vendorsArrayList, setVendorsArrayList] = React.useState([]);
+  const [stateArrayArrayList, setStateArrayArrayList] = React.useState([]);
+  const [positionArrayList, setPositionArrayList] = React.useState([]);
 
   const [showSideMenu, setShowSideMenu] = React.useState(false);
   const [openModal, setOpenModal] = React.useState(false);
@@ -39,9 +49,148 @@ const Sidebar = () => {
     key: "",
     type: "",
   });
+  const [filterKey, setFilterKey] = React.useState([
+    { id: 1, value: "Product" },
+    { id: 2, value: "LOB" },
+    { id: 3, value: "Media Channel" },
+    { id: 4, value: "Client" },
+    { id: 5, value: "Buyer Campaingn" },
+    { id: 6, value: "Publisher" },
+    { id: 7, value: "State" },
+    { id: 8, value: "Position" },
+    { id: 9, value: "Date" },
+  ]);
+
+  const [selectedFilter, setSelectedFilter] = React.useState(1);
 
   const [interval, setInterval] = React.useState([1000, 2000, 5000, 10000]);
   const [intervalValue, setIntervalValue] = React.useState(0);
+  const [applyedFiltered, setApplyedFiltered] = React.useState([]);
+  const [searched, setSearched] = React.useState("");
+
+  // console.log(
+  //   "🚀 ~ file: Sidebar.js:61 ~ Sidebar ~ applyedFiltered",
+  //   applyedFiltered
+  // );
+
+  const defaultArrayFunc = () => {
+    setProductArrayList(loginData?.productArray);
+    setLeadTypeArrayList(loginData?.leadType);
+    setQualityTypeArrayList(loginData?.qualityType);
+    setBuyersArrayList(loginData?.buyers);
+    setVendorsArrayList(loginData?.vendors);
+    setStateArrayArrayList(loginData?.stateArray);
+    setPositionArrayList(loginData?.position);
+  };
+
+  React.useEffect(() => {
+    if (loginData) {
+      defaultArrayFunc();
+    }
+  }, [loginData]);
+
+  React.useEffect(() => {
+    setSearched("");
+    defaultArrayFunc();
+  }, [selectedFilter]);
+
+  React.useEffect(() => {
+    if (showSideMenu) {
+      setSelectedFilter(1);
+      setApplyedFiltered([]);
+      setSearched("");
+      defaultArrayFunc();
+    }
+  }, [showSideMenu]);
+
+  const handleChange = (e) => {
+    setSearched(e.target.value);
+    let item = e.target.value;
+    let updateArray = [];
+    if (selectedFilter === 1) {
+      updateArray = loginData?.productArray.filter((val) =>
+        val.toLowerCase().includes(item.toLowerCase())
+      );
+      return setProductArrayList(updateArray);
+    } else if (selectedFilter === 2) {
+      updateArray = loginData?.leadType.filter((val) =>
+        val.lead_type_name.toLowerCase().includes(item.toLowerCase())
+      );
+      return setLeadTypeArrayList(updateArray);
+    } else if (selectedFilter === 3) {
+      updateArray = loginData?.qualityType.find(
+        (val) => val.name === item
+      ).name;
+    } else if (selectedFilter === 4) {
+      updateArray = loginData?.buyers.find(
+        (val) => val.buyer_name === item
+      ).buyer_name;
+    } else if (selectedFilter === 5) {
+    } else if (selectedFilter === 6) {
+      updateArray = loginData?.vendors.find(
+        (val) => val.first_name === item
+      ).first_name;
+    } else if (selectedFilter === 7) {
+      updateArray = loginData?.stateArray.find(
+        (val) => val.State === item
+      ).State;
+    } else {
+      updateArray = parseInt(item);
+    }
+
+    console.log(
+      "🚀 ~ file: Sidebar.js:79 ~ handleChange ~ updateArray",
+      updateArray
+    );
+  };
+
+  const checked = (event, val) => {
+    let oldValue = applyedFiltered;
+    var item = event.target.name;
+    let selectVal = 1;
+    if (val === 1) {
+      selectVal = loginData?.productArray.find((val) => val === item);
+    } else if (val === 2) {
+      selectVal = loginData?.leadType.find(
+        (val) => val.lead_type_name === item
+      ).lead_type_name;
+    } else if (val === 3) {
+      selectVal = loginData?.qualityType.find((val) => val.name === item).name;
+    } else if (val === 4) {
+      selectVal = loginData?.buyers.find(
+        (val) => val.buyer_name === item
+      ).buyer_name;
+    } else if (val === 5) {
+    } else if (val === 6) {
+      selectVal = loginData?.vendors.find(
+        (val) => val.first_name === item
+      ).first_name;
+    } else if (val === 7) {
+      selectVal = loginData?.stateArray.find((val) => val.State === item).State;
+    } else {
+      selectVal = parseInt(item);
+    }
+    loginData?.productArray.find((val) => val === item);
+    let selectFilterKey = filterKey.find((vala) => vala.id === val).id;
+    let add = { key: selectFilterKey, value: selectVal };
+
+    if (oldValue.length > 0) {
+      let check = oldValue.filter((el) => el.key !== selectFilterKey);
+      if (
+        applyedFiltered.some(
+          (obj) => obj.key === selectedFilter && obj.value === item
+        )
+      ) {
+        setApplyedFiltered(check);
+      } else {
+        check.push(add);
+        setApplyedFiltered(check);
+      }
+    } else {
+      // oldValue.push(add);
+      setApplyedFiltered([add]);
+    }
+  };
 
   React.useEffect(() => {
     if (mainWidgetTypeArray && mainWidgetTypeArray.length > 0) {
@@ -85,6 +234,44 @@ const Sidebar = () => {
     }
   }, [widgetLoading]);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // React.useEffect(() => {
+  //   let token = global.localStorage.getItem("access_token");
+  //   if (!token) {
+  //     history.push("/login");
+  //   }
+  // }, []);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   React.useEffect(() => {
     if (widgetError) {
       errorToaster(widgetError);
@@ -92,12 +279,28 @@ const Sidebar = () => {
     }
   }, [widgetError]);
 
+
+
+
+
+
+
   React.useEffect(() => {
     if (!mainWidgetTypeArray && openModal) {
       history.push("/login");
+      global.localStorage.clear()
     }
   }, [mainWidgetTypeArray, openModal]);
 
+
+
+
+
+
+
+
+
+  
   const handleMainWidgetOptionChange = (value) => {
     setWidgetType(value);
     let filterdValue = subWidgetTypeArray.filter(
@@ -131,7 +334,7 @@ const Sidebar = () => {
         }}
       >
         <div
-          // className={styles.modalContent}
+          className={styles.sidebar_add_widget_form__1TGwy}
           onClick={(e) => {
             // do not close modal if anything inside modal content is clicked
             e.stopPropagation();
@@ -148,6 +351,210 @@ const Sidebar = () => {
       return (
         <>
           <div class={showSideMenu ? "sidebar show" : "sidebar"}>
+            <i
+              onClick={() => setShowSideMenu(!showSideMenu)}
+              class="far fa-times closebtn"
+            ></i>
+            <div class="filtermenu">
+              <div class="tabmenu">
+                <div
+                  class="nav flex-column nav-pills"
+                  id="v-pills-tab"
+                  role="tablist"
+                  aria-orientation="vertical"
+                >
+                  {filterKey.map((el) => (
+                    <button
+                      class={
+                        el.id === selectedFilter
+                          ? "nav-link active"
+                          : "nav-link"
+                      }
+                      // class="nav-link active"
+                      id="tab1"
+                      data-bs-toggle="pill"
+                      data-bs-target="#v-pills-tab1"
+                      type="button"
+                      role="tab"
+                      aria-controls=""
+                      aria-selected="true"
+                      onClick={() => setSelectedFilter(el.id)}
+                    >
+                      {el.value}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div class="tab-content" id="v-pills-tabContent">
+                <div
+                  class="tab-pane fade show active"
+                  id="v-pills-tab1"
+                  role="tabpanel"
+                  aria-labelledby=""
+                >
+                  <div class="innerdiv">
+                    <input
+                      type="text"
+                      placeholder="Search here.."
+                      class="proserch"
+                      onChange={(e) => handleChange(e)}
+                      value={searched}
+                    />
+                    <div class="checklist">
+                      {/* filter Option */}
+                      {selectedFilter === 1 &&
+                        loginData &&
+                        productArrayList.map((el) => (
+                          <div class="custom_checkbox">
+                            <input
+                              type="checkbox"
+                              id={el}
+                              name={el}
+                              checked={applyedFiltered.some(
+                                (obj) =>
+                                  obj.key === selectedFilter && obj.value === el
+                              )}
+                              onChange={(e) => checked(e, selectedFilter)}
+                            />
+                            <label for={el}>{el}</label>
+                          </div>
+                        ))}
+                      {selectedFilter === 2 &&
+                        loginData &&
+                        leadTypeArrayList.map((el) => (
+                          <div class="custom_checkbox">
+                            <input
+                              type="checkbox"
+                              id={el.lead_type_name}
+                              name={el.lead_type_name}
+                              checked={applyedFiltered.some(
+                                (obj) =>
+                                  obj.key === selectedFilter &&
+                                  obj.value === el.lead_type_name
+                              )}
+                              onChange={(e) => checked(e, selectedFilter)}
+                            />
+                            <label for={el.lead_type_name}>
+                              {el.lead_type_name}
+                            </label>
+                          </div>
+                        ))}
+                      {selectedFilter === 3 &&
+                        loginData &&
+                        qualityTypeArrayList.map((el) => (
+                          <div class="custom_checkbox">
+                            <input
+                              type="checkbox"
+                              id={el.name}
+                              name={el.name}
+                              checked={applyedFiltered.some(
+                                (obj) =>
+                                  obj.key === selectedFilter &&
+                                  obj.value === el.name
+                              )}
+                              onChange={(e) => checked(e, selectedFilter)}
+                            />
+                            <label for={el.name}>{el.name}</label>
+                          </div>
+                        ))}
+                      {selectedFilter === 4 &&
+                        loginData &&
+                        buyersArrayList.map((el) => (
+                          <div class="custom_checkbox">
+                            <input
+                              type="checkbox"
+                              id={el.buyer_name}
+                              name={el.buyer_name}
+                              checked={applyedFiltered.some(
+                                (obj) =>
+                                  obj.key === selectedFilter &&
+                                  obj.value === el.buyer_name
+                              )}
+                              onChange={(e) => checked(e, selectedFilter)}
+                            />
+                            <label for={el.buyer_name}>{el.buyer_name}</label>
+                          </div>
+                        ))}
+                      {selectedFilter === 5 && (
+                        // &&
+                        // loginData &&
+                        // loginData?.position.map((el) => (
+                        <div class="custom_checkbox">
+                          <input type="checkbox" id={"Client1"} />
+                          <label for="Client1">asd</label>
+                        </div>
+                        // ))}
+                      )}
+                      {selectedFilter === 6 &&
+                        loginData &&
+                        vendorsArrayList.map((el) => (
+                          <div class="custom_checkbox">
+                            <input
+                              type="checkbox"
+                              id={el.first_name}
+                              name={el.first_name}
+                              checked={applyedFiltered.some(
+                                (obj) =>
+                                  obj.key === selectedFilter &&
+                                  obj.value === el.first_name
+                              )}
+                              onChange={(e) => checked(e, selectedFilter)}
+                            />
+                            <label for={el.first_name}>{el.first_name}</label>
+                          </div>
+                        ))}
+                      {selectedFilter === 7 &&
+                        loginData &&
+                        stateArrayArrayList.map((el) => (
+                          <div class="custom_checkbox">
+                            <input
+                              type="checkbox"
+                              id={el.State}
+                              name={el.State}
+                              checked={applyedFiltered.some(
+                                (obj) =>
+                                  obj.key === selectedFilter &&
+                                  obj.value === el.State
+                              )}
+                              onChange={(e) => checked(e, selectedFilter)}
+                            />
+                            <label for={el.State}>{el.State}</label>
+                          </div>
+                        ))}
+                      {selectedFilter === 8 &&
+                        loginData &&
+                        positionArrayList.map((el) => (
+                          <div class="custom_checkbox">
+                            <input
+                              type="checkbox"
+                              id={el}
+                              name={el}
+                              checked={applyedFiltered.some(
+                                (obj) =>
+                                  obj.key === selectedFilter && obj.value === el
+                              )}
+                              onChange={(e) => checked(e, selectedFilter)}
+                            />
+                            <label for={el}>{el}</label>
+                          </div>
+                        ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="sidebtndiv">
+              <button
+                class="btn btn-outline-info"
+                onClick={() => setApplyedFiltered([])}
+              >
+                Clear
+              </button>
+              <button class="btn btn-primary">Apply</button>
+            </div>
+          </div>
+
+          {/* <div class={showSideMenu ? "sidebar show" : "sidebar"}>
             <i
               onClick={() => setShowSideMenu(!showSideMenu)}
               class="far fa-times closebtn"
@@ -229,7 +636,7 @@ const Sidebar = () => {
               <button class="btn btn-outline-info">Clear</button>
               <button class="btn btn-primary">Apply</button>
             </div>
-          </div>
+          </div> */}
 
           <div class="side_fixed_icon">
             <a
@@ -273,7 +680,8 @@ const Sidebar = () => {
                   </h5>
                   <button
                     type="button"
-                    class="far fa-times closebtn"
+                    // class="far fa-times closebtn"
+                    className={"far fa-times " + styles.closebtn}
                     data-bs-dismiss="modal"
                     aria-label="Close"
                     onClick={() => setOpenModal(!openModal)}
@@ -333,7 +741,9 @@ const Sidebar = () => {
                       class="btn btn-primary"
                       onClick={() => getWidgetfunc()}
                     >
-                      Save
+                      {widgetLoading && <i class="fas fa-spinner fa-pulse"></i>}
+                      {widgetLoading ? ` Save` : `Save`}
+                      {/* Save */}
                     </button>
                   </form>
                 </div>

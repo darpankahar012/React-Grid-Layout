@@ -28,7 +28,8 @@ function Login(props) {
   };
 
   useEffect(() => {
-    if (userDetails) {
+    let token = global.localStorage.getItem("access_token");
+    if (userDetails && token) {
       history.push("/");
     }
   }, [userDetails]);

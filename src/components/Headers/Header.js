@@ -1,11 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 const Header = () => {
   let location = useLocation();
+  const history = useHistory();
 
   const [navbarToggler, setNavbarToggler] = React.useState(false);
+
+  React.useEffect(() => {
+    let token = global.localStorage.getItem("access_token");
+    if (!token) {
+      history.push("/login");
+    }
+  }, []);
 
   const hideHeaders = () => {
     if (location.pathname !== "/login") {
@@ -63,11 +73,17 @@ const Header = () => {
                     </a>
                   </li>
                   <li class="nav-item">
-                    <Link to="/login">
+                    {location.pathname === "/login" ? (
+                      <Link to="/login">
+                        <a class="nav-link">
+                          <i class="fas fa-power-off"></i> Login
+                        </a>
+                      </Link>
+                    ) : (
                       <a class="nav-link">
-                        <i class="fas fa-power-off"></i> Admin
+                        <i class="fas fa-power-off"></i> Logout
                       </a>
-                    </Link>
+                    )}
                   </li>
                 </ul>
               </div>
@@ -199,3 +215,4 @@ const Header = () => {
   );
 };
 export default Header;
+// export const history = createHashHistory();

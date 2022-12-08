@@ -1,34 +1,28 @@
 import React, { lazy, Suspense } from "react";
-import {
-  Routes,
-  Route,
-  //  Redirect
-} from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 
-import ProtectedRoute from "./ProtectedRoute";
-import ExampleLayout from "../components/grid-layout";
+// import ProtectedRoute from "./ProtectedRoute";
+import ExampleLayout from "../components/Grid/grid-layout";
 import Login from "../components/Login/Login";
 import { SuspenseFallbackLoader } from "../components/Loader";
-
-// const DashBoardComponent = lazy(() => import("../components/DashBoard"));
-// const ExamplePages = lazy(() => import("../components/ExamplePages"));
-// const ForgotPassword = lazy(() => import("../components/forgotPassword"));
+import ProtectedRoute from "./ProtectedRoute";
 
 function RoutesURL(props) {
   let load = SuspenseFallbackLoader();
   return (
     <Suspense fallback={load}>
-      <Routes>
+      <Switch>
+        <Route exact path="/login" render={(props) => <Login {...props} />} />
         <ProtectedRoute>
           <Route
             exact
             path="/"
             render={(props) => <ExampleLayout {...props} />}
           />
-          <Route exact path="/login" render={(props) => <Login {...props} />} />
           {/* <Route exact path="*" render={(props) => <PageNotFound {...props} />} /> */}
+          <Redirect from="*" to="/" />
         </ProtectedRoute>
-      </Routes>
+      </Switch>
     </Suspense>
   );
 }

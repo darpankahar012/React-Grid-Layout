@@ -6,6 +6,12 @@ export const login = () => {
     }
 }
 
+export const resetLogin = () => {
+    return {
+        type: authActions.RESET_LOGIN
+    }
+}
+
 export const loginSuccess = (data) => {
     return {
         type: authActions.LOGIN_SUCCESS,

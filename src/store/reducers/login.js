@@ -25,6 +25,14 @@ export const login = (state = initialState, action) => {
                 error: "",
                 invalidCredential: ""
             }
+        case authActions.RESET_LOGIN:
+            return {
+                ...state,
+                loading: false,
+                data: "",
+                error: "",
+                invalidCredential: ""
+            }
         case authActions.LOGIN_INVALID:
             return {
                 ...state,

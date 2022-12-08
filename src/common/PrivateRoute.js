@@ -1,9 +1,7 @@
-import { useEffect } from "react";
 import { Route, Redirect, useLocation } from "react-router-dom";
 
 export const PrivateRoute = ({ component: Component, ...rest }) => {
   const location = useLocation();
-
   return (
     <Route
       {...rest}

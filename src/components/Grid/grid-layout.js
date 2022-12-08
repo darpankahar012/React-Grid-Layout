@@ -2,8 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom";
 import AddRemoveLayout from "./ShowcaseLayout";
 // import AddRemoveLayout from "./ShowcaseLayout";
-import { SuspenseFallbackLoader } from "./Loader";
-export default class ExampleLayout extends React.Component {
+import { SuspenseFallbackLoader } from "./../Loader";
+import { connect } from "react-redux";
+
+class ExampleLayout extends React.Component {
   constructor(props) {
     super(props);
     this.state = { layout: [] };
@@ -17,10 +19,11 @@ export default class ExampleLayout extends React.Component {
 
   saveToLS(key, value) {
     const findIndex = value.findIndex((val) => val.i === "+");
-    const checkValue = value.find((val) => val.i === "+"); 
+    const checkValue = value.find((val) => val.i === "+");
     // const addValToLastIndex = value[value.length - 1];
     const changeValue = { ...checkValue, add: true };
     value[findIndex] = changeValue;
+    console.log("🚀 ~ saveToLS ~ value", value)
     if (global.localStorage) {
       global.localStorage.setItem(
         "rgl-7",
@@ -42,6 +45,7 @@ export default class ExampleLayout extends React.Component {
   }
 
   render() {
+    const { data } = this.props;
     return (
       <div>
         {/* <div className="layoutJSON">
@@ -56,6 +60,13 @@ export default class ExampleLayout extends React.Component {
   }
 }
 
-const contentDiv = document.getElementById("root");
-const gridProps = window.gridProps || {};
-ReactDOM.render(React.createElement(ExampleLayout, gridProps), contentDiv);
+function mapStateToProps(state) {
+  const { data } = state.login;
+  return { data };
+}
+
+export default connect(mapStateToProps)(ExampleLayout);
+
+// const contentDiv = document.getElementById("root");
+// const gridProps = window.gridProps || {};
+// ReactDOM.render(React.createElement(ExampleLayout, gridProps), contentDiv);
