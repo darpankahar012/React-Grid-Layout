@@ -5,7 +5,10 @@ import { useHistory } from "react-router-dom";
 import styles from "./sidebar.module.css";
 import { widgetService } from "../../services";
 import { errorToaster, successToaster } from "../../common/toaster";
-import { getWidgetErrorReSet } from "../../store/actions";
+import {
+  getWidgetErrorReSet,
+  saveWidgetListResetToast,
+} from "../../store/actions";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
@@ -20,6 +23,12 @@ const Sidebar = () => {
     widgetData,
     widgetLoading,
     widgetError,
+    widgetsListData,
+    widgetsListLoading,
+    widgetsListError,
+    saveWidgetsListToast,
+    saveWidgetsListLoading,
+    layout,
   } = useSelector((state) => ({
     mainWidgetTypeArray: state.login?.data.mainWidgetTypeArray,
     subWidgetTypeArray: state.login?.data.subWidgetTypeArray,
@@ -28,6 +37,12 @@ const Sidebar = () => {
     widgetData: state.widget?.data,
     widgetLoading: state.widget?.loading,
     widgetError: state.widget?.error,
+    widgetsListData: state.widget?.widgetsListData,
+    widgetsListLoading: state.widget?.widgetsListLoading,
+    widgetsListError: state.widget?.widgetsListError,
+    saveWidgetsListToast: state.widget?.saveWidgetsListToast,
+    saveWidgetsListLoading: state.widget?.saveWidgetsListLoading,
+    layout: state.layout?.data,
   }));
 
   const [productArrayList, setProductArrayList] = React.useState([]);
@@ -63,8 +78,10 @@ const Sidebar = () => {
 
   const [selectedFilter, setSelectedFilter] = React.useState(1);
 
-  const [interval, setInterval] = React.useState([1000, 2000, 5000, 10000]);
-  const [intervalValue, setIntervalValue] = React.useState(0);
+  const [interval, setInterval] = React.useState([
+    180000, 300000, 600000, 10000,
+  ]);
+  const [intervalValue, setIntervalValue] = React.useState(180000);
   const [applyedFiltered, setApplyedFiltered] = React.useState([]);
   const [searched, setSearched] = React.useState("");
 
@@ -83,6 +100,11 @@ const Sidebar = () => {
     setPositionArrayList(loginData?.position);
   };
 
+  React.useEffect(() => {
+    if (loginData) {
+      defaultArrayFunc();
+    }
+  }, [loginData]);
   React.useEffect(() => {
     if (loginData) {
       defaultArrayFunc();
@@ -234,20 +256,20 @@ const Sidebar = () => {
     }
   }, [widgetLoading]);
 
+  React.useEffect(() => {
+    if (widgetsListData?.message && saveWidgetsListToast) {
+      successToaster(widgetsListData?.message);
+      dispatch(saveWidgetListResetToast());
+      console.log("if");
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+      // Refresh After save Layout
+      // dispatch(widgetService.getWidgetList("getWidgets_layout"));
+    }
+    if (widgetsListError?.message && saveWidgetsListToast) {
+      errorToaster(widgetsListError?.message);
+      dispatch(saveWidgetListResetToast());
+    }
+  }, [saveWidgetsListToast]);
 
   // React.useEffect(() => {
   //   let token = global.localStorage.getItem("access_token");
@@ -256,51 +278,49 @@ const Sidebar = () => {
   //   }
   // }, []);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   React.useEffect(() => {
-    if (widgetError) {
+    if (widgetError === "Unauthorized.") {
       errorToaster(widgetError);
+      global.localStorage.clear();
+      history.push("/login");
       dispatch(getWidgetErrorReSet());
     }
   }, [widgetError]);
 
-
-
-
-
-
-
   React.useEffect(() => {
     if (!mainWidgetTypeArray && openModal) {
       history.push("/login");
-      global.localStorage.clear()
+      global.localStorage.clear();
     }
   }, [mainWidgetTypeArray, openModal]);
 
+  React.useEffect(() => {
+    console.log(
+      "🚀 ~ file: Sidebar.js:306 ~ Sidebar ~ widgetSubType",
+      widgetSubType
+    );
+    // if (!openModal) {
+    //   setWidgetType("");
+    //   setWidgetSubType({
+    //     label: "Clicks",
+    //     key: "getwidget_Clicks",
+    //     type: "Clicks",
+    //     mode: "both",
+    //   });
+    //   setIntervalValue(100000);
+    // }
+  }, [openModal]);
 
+  const saveLayout = () => {
+    // let data = JSON.parse(global.localStorage.getItem("rgl-7"));
+    dispatch(
+      widgetService.saveWidgetData({
+        url: "saveWidgets",
+        data: layout,
+      })
+    );
+  };
 
-
-
-
-
-
-
-  
   const handleMainWidgetOptionChange = (value) => {
     setWidgetType(value);
     let filterdValue = subWidgetTypeArray.filter(
@@ -321,7 +341,18 @@ const Sidebar = () => {
   };
 
   const getWidgetfunc = () => {
-    dispatch(widgetService.getWidget(widgetSubType));
+    let arry = layout;
+    let lastElement = arry[arry.length - 1].i;
+    let lastIndex = parseInt(lastElement.match(/\d+/)[0]) + 1;
+
+    dispatch(
+      widgetService.getWidget({
+        ...widgetSubType,
+        intervalValue: parseInt(intervalValue),
+        from: "Home",
+        id: "n" + lastIndex,
+      })
+    );
   };
 
   function Modal({ children, shown, close }) {
@@ -350,6 +381,7 @@ const Sidebar = () => {
     if (location.pathname !== "/login") {
       return (
         <>
+          {/* FIlter Section */}
           <div class={showSideMenu ? "sidebar show" : "sidebar"}>
             <i
               onClick={() => setShowSideMenu(!showSideMenu)}
@@ -554,90 +586,6 @@ const Sidebar = () => {
             </div>
           </div>
 
-          {/* <div class={showSideMenu ? "sidebar show" : "sidebar"}>
-            <i
-              onClick={() => setShowSideMenu(!showSideMenu)}
-              class="far fa-times closebtn"
-            ></i>
-            <ul>
-              <li class="dropmenu current">
-                <a href="javascript:void">Product</a>
-                <div class="innerdiv">
-                  <div class="custom_checkbox">
-                    <input type="checkbox" id="Product1" />
-                    <label for="Product1">Product 1</label>
-                  </div>
-                  <div class="custom_checkbox">
-                    <input type="checkbox" id="Product2" />
-                    <label for="Product2">Product 2</label>
-                  </div>
-                  <div class="custom_checkbox">
-                    <input type="checkbox" id="Product3" />
-                    <label for="Product3">Product 3</label>
-                  </div>
-                </div>
-              </li>
-
-              <li>
-                <a href="javascript:void">L.O.B</a>
-              </li>
-
-              <li>
-                <a href="javascript:void">Media Channel</a>
-              </li>
-
-              <li class="dropmenu">
-                <a href="javascript:void">Client</a>
-                <div class="innerdiv">
-                  <input
-                    type="text"
-                    placeholder="Search here.."
-                    class="proserch"
-                  />
-                  <div class="custom_checkbox">
-                    <input type="checkbox" id="Client1" />
-                    <label for="Client1">Client 1</label>
-                  </div>
-                  <div class="custom_checkbox">
-                    <input type="checkbox" id="Client2" />
-                    <label for="Client2">Client 2</label>
-                  </div>
-                  <div class="custom_checkbox">
-                    <input type="checkbox" id="Client3" />
-                    <label for="Client3">Client 3</label>
-                  </div>
-                </div>
-              </li>
-
-              <li>
-                <a href="javascript:void">Buyer Campaign</a>
-              </li>
-
-              <li>
-                <a href="javascript:void">Publisher</a>
-              </li>
-              <li>
-                <a href="javascript:void">Publisher Campaign</a>
-              </li>
-
-              <li>
-                <a href="javascript:void">State</a>
-              </li>
-
-              <li>
-                <a href="javascript:void">Position</a>
-              </li>
-
-              <li>
-                <a href="javascript:void">Date</a>
-              </li>
-            </ul>
-            <div class="sidebtndiv">
-              <button class="btn btn-outline-info">Clear</button>
-              <button class="btn btn-primary">Apply</button>
-            </div>
-          </div> */}
-
           <div class="side_fixed_icon">
             <a
               href="javascript:void"
@@ -655,8 +603,26 @@ const Sidebar = () => {
               onClick={() => setOpenModal((oldState) => !oldState)}
               // ref={modalRef}
             ></a>
-            <a href="javascript:void" title="Save" class="fal fa-bookmark"></a>
+            {saveWidgetsListLoading ? (
+              <a
+                href="javascript:void"
+                title="Save"
+                // onClick={() => saveLayout()}
+                // class="fal fa-bookmark"
+              >
+                <i class="fas fa-spinner fa-pulse fal fa-bookmark"></i>
+              </a>
+            ) : (
+              <a
+                href="javascript:void"
+                title="Save"
+                onClick={() => saveLayout()}
+                class="fal fa-bookmark"
+              ></a>
+            )}
           </div>
+
+          {/* Modal Section */}
           <Modal
             shown={openModal}
             close={() => {
@@ -729,7 +695,11 @@ const Sidebar = () => {
                         value={intervalValue}
                       >
                         {interval.map((el) => (
-                          <option value={el}>{el}</option>
+                          <option value={el}>
+                            {(el === 180000 && "3 Min") ||
+                              (el === 300000 && "5 Min") ||
+                              (el === 600000 && "10 Min")}
+                          </option>
                         ))}
                         {/* <option value="">Refresh interval</option>
                         <option value="">Refresh interval</option>
@@ -739,7 +709,9 @@ const Sidebar = () => {
                     <button
                       type="button"
                       class="btn btn-primary"
-                      onClick={() => getWidgetfunc()}
+                      onClick={() => {
+                        !widgetLoading && getWidgetfunc();
+                      }}
                     >
                       {widgetLoading && <i class="fas fa-spinner fa-pulse"></i>}
                       {widgetLoading ? ` Save` : `Save`}

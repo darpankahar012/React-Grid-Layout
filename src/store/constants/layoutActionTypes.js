@@ -1,4 +1,4 @@
 export const layoutActionTypes = {
   LAYOUT: "LAYOUT",
-  LAYOUT_SUCCESS: "LAYOUT_SUCCESS",
+  LAYOUT_STORE: "LAYOUT_STORE",
 };

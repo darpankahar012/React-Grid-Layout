@@ -4,6 +4,7 @@ import AddRemoveLayout from "./ShowcaseLayout";
 // import AddRemoveLayout from "./ShowcaseLayout";
 import { SuspenseFallbackLoader } from "./../Loader";
 import { connect } from "react-redux";
+import { layoutChangeSuccess } from "../../store/actions";
 
 class ExampleLayout extends React.Component {
   constructor(props) {
@@ -13,7 +14,18 @@ class ExampleLayout extends React.Component {
   }
 
   onLayoutChange(layout) {
-    this.saveToLS("layout", layout);
+    const { layoutList } = this.props;
+
+    const checkValue = layout.map((el) => {
+      if (layoutList && layoutList.length > 0) {
+        let val = layoutList.find((check) => check.i === el.i);
+        const changeValue = { ...val, w: el.w, x: el.x, y: el.y, h: el.h };
+        return changeValue;
+      }
+    });
+
+    this.props.layoutChangeSuccess(checkValue);
+    // this.saveToLS("layout", layout);
     this.setState({ layout: layout });
   }
 
@@ -23,7 +35,8 @@ class ExampleLayout extends React.Component {
     // const addValToLastIndex = value[value.length - 1];
     const changeValue = { ...checkValue, add: true };
     value[findIndex] = changeValue;
-    console.log("🚀 ~ saveToLS ~ value", value)
+    // console.log("🚀 ~ saveToLS ~ value", value);
+    // this.props.layoutChangeSuccess(value);
     if (global.localStorage) {
       global.localStorage.setItem(
         "rgl-7",
@@ -45,7 +58,7 @@ class ExampleLayout extends React.Component {
   }
 
   render() {
-    const { data } = this.props;
+    // const { layoutList, data } = this.props;
     return (
       <div>
         {/* <div className="layoutJSON">
@@ -61,11 +74,20 @@ class ExampleLayout extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const { data } = state.login;
-  return { data };
+  const { data, layoutList } = {
+    data: state.login,
+    layoutList: state.layout.data,
+  };
+  return { data, layoutList };
 }
 
-export default connect(mapStateToProps)(ExampleLayout);
+const mapDispatchToProps = (dispatch) => ({
+  layoutChangeSuccess: (data) => {
+    dispatch(layoutChangeSuccess(data));
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExampleLayout);
 
 // const contentDiv = document.getElementById("root");
 // const gridProps = window.gridProps || {};

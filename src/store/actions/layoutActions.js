@@ -8,7 +8,7 @@ export const layoutChange = () => {
 
 export const layoutChangeSuccess = (data) => {
   return {
-    type: layoutActionTypes.LAYOUT_SUCCESS,
+    type: layoutActionTypes.LAYOUT_STORE,
     payload: data,
   };
 };

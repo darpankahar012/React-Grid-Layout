@@ -11,18 +11,17 @@ function ProtectedRoute(props) {
   var currentLocation = window.location.pathname;
 
   async function validateToken() {
-    let token = localStorage.getItem("token");
-    console.log("🚀 ~ file: ProtectedRoute.js:15 ~ validateToken ~ token", token)
+    let token = localStorage.getItem("access_token");
     if (token) {
       setIsAuth(true);
       return;
     } else {
-      // history.push("/login");
+      history.push("/login");
     }
   }
 
   useEffect(() => {
-    // validateToken();
+    validateToken();
   }, [currentLocation]);
 
   if (isAuth === null) return null;

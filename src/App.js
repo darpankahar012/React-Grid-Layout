@@ -22,8 +22,8 @@ import Header from "./components/Headers/Header";
 // import "react-resizable/css/styles.css";
 // import "./styles.css";
 import GridLayout from "./components/sandBoxGrid/GridLayout";
-// import Layout from "./components/Navigation/Layout";
-// import RoutesURL from "./common/Routes";
+import Layout from "./common/Layout";
+import RoutesURL from "./common/Routes";
 
 const Login = lazy(() => import("./components/Login/Login"));
 const Main = lazy(() => import("./components/Main"));
@@ -318,36 +318,9 @@ function App() {
   return (
     <div>
       <Router>
-        {/* <Layout>
+        <Layout>
           <RoutesURL />
-        </Layout> */}
-        <Header />
-        <Sidebar />
-        <Suspense fallback={load}>
-          <Switch>
-            {/* <Route path="/" element={<ExampleLayout />} /> */}
-
-            <Route
-              exact
-              path="/"
-              render={(props) => <ExampleLayout {...props} />}
-            />
-            <Route
-              exact
-              path="/sandGrid"
-              render={(props) => <GridLayout data={data} layouts={layouts} />}
-            />
-
-            <Route
-              exact
-              path="/login"
-              render={(props) => <Login {...props} />}
-            />
-            {/* <Route path="login" element={<Login />} /> */}
-            <Redirect from="*" to="/" />
-          </Switch>
-        </Suspense>
-        <Ticker />
+        </Layout>
       </Router>
     </div>
   );

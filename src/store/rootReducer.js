@@ -1,5 +1,12 @@
 import { combineReducers } from "redux";
-import { login, publisher, forgotPassword, layout, widget } from "./reducers";
+import {
+  login,
+  publisher,
+  forgotPassword,
+  layout,
+  widget,
+  ticker,
+} from "./reducers";
 
 const appReducer = combineReducers({
   publisher: publisher,
@@ -7,6 +14,7 @@ const appReducer = combineReducers({
   forgotPassword: forgotPassword,
   layout: layout,
   widget: widget,
+  ticker: ticker,
 });
 
 const initialState = appReducer({}, {});

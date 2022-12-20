@@ -28,7 +28,7 @@ export class AuthenticationService {
           },
         })
         .then((response) => {
-          console.log("response.data", response.data);
+          // console.log("response.data", response.data);
           localStorage.removeItem("access_token");
           if (response.data.status === 1) {
             localStorage.setItem(

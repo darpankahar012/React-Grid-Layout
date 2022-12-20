@@ -10,6 +10,7 @@ import { useHistory } from "react-router-dom";
 import styles from "./login.module.css";
 import { SuspenseFallbackLoader } from "../Loader";
 import _ from "lodash";
+import { logoutSuccess } from "../../store/actions";
 
 function Login(props) {
   const dispatch = useDispatch();
@@ -31,6 +32,9 @@ function Login(props) {
     let token = global.localStorage.getItem("access_token");
     if (userDetails && token) {
       history.push("/");
+    } else {
+      dispatch(logoutSuccess());
+      localStorage.clear();
     }
   }, [userDetails]);
 

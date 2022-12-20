@@ -13,7 +13,7 @@ export const layout = (state = initialState, action) => {
         loading: true,
         data: "",
       };
-    case layoutActionTypes.LAYOUT_SUCCESS:
+    case layoutActionTypes.LAYOUT_STORE:
       return {
         ...state,
         loading: false,

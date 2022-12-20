@@ -3,19 +3,27 @@ import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { logoutSuccess } from "../../store/actions";
 
 const Header = () => {
   let location = useLocation();
+  let dispatch = useDispatch();
   const history = useHistory();
 
   const [navbarToggler, setNavbarToggler] = React.useState(false);
 
-  React.useEffect(() => {
-    let token = global.localStorage.getItem("access_token");
-    if (!token) {
-      history.push("/login");
-    }
-  }, []);
+  // React.useEffect(() => {
+  //   let token = global.localStorage.getItem("access_token");
+  //   if (!token) {
+  //     history.push("/login");
+  //   }
+  // }, []);
+
+  const logout = () => {
+    dispatch(logoutSuccess());
+    history.push("/login");
+    localStorage.clear();
+  };
 
   const hideHeaders = () => {
     if (location.pathname !== "/login") {
@@ -80,7 +88,7 @@ const Header = () => {
                         </a>
                       </Link>
                     ) : (
-                      <a class="nav-link">
+                      <a class="nav-link" onClick={() => logout()}>
                         <i class="fas fa-power-off"></i> Logout
                       </a>
                     )}

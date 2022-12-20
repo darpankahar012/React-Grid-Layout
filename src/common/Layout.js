@@ -12,7 +12,7 @@ function Layout({ children }) {
       {!PathsArrays.includes(location.pathname) ? (
         <>
           <Header />
-          <div className="container-fluid page-body-wrapper">
+          <div className="container page-body-wrapper">
             <Sidebar />
             <div className="main-panel">
               {children}
