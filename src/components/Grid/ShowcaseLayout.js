@@ -435,7 +435,7 @@ class AddRemoveLayout extends React.PureComponent {
         minW: 2,
         minH: 2,
         // maxW: 4,
-        maxH: 4,
+        // maxH: 4,
         side: 1,
         w: 3,
         h: 3,
